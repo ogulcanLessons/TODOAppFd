@@ -17,7 +17,7 @@
       </div>
       <ul class="list-group">
         <li *ngFor="let list of lists; index as i" class="list-group-item"
-          [ngClass]="{ 'active': selectedList == list }" (click)="selectedList = list">
+          [ngClass]="{ 'active': selectedList == list }" (click)="selectList(list)">
           <div class="clearfix">
             <div class="float-start">
               {{ list.title }}
@@ -32,8 +32,9 @@
     <div class="col-sm-8" *ngIf="selectedList">
       <div class="clearfix">
         <h2 class="float-start">{{ selectedList.title }}</h2>
+        <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" (input)="search()" />
         <button id="listOptions" class="btn btn-default float-end" title="List Options..."
-          (click)="showListOptionsModal(listOptionsModalTemplate)">
+                (click)="showListOptionsModal(listOptionsModalTemplate)">
           <i class="bi bi-three-dots-vertical"></i>
         </button>
       </div>
@@ -126,6 +127,10 @@
       <div class="form-group">
         <label for="note">Note</label>
         <textarea id="note" class="form-control" rows="3" formControlName="note"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="tags">Tags</label>
+        <textarea id="tags" class="form-control" rows="1" formControlName="tags"></textarea>
       </div>
     </form>
     <div *ngIf="debug">

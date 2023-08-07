@@ -854,6 +854,7 @@ export class UpdateTodoItemDetailCommand implements IUpdateTodoItemDetailCommand
     listId?: number;
     priority?: PriorityLevel;
     note?: string | undefined;
+    tags?: string;
 
     constructor(data?: IUpdateTodoItemDetailCommand) {
         if (data) {
@@ -870,6 +871,7 @@ export class UpdateTodoItemDetailCommand implements IUpdateTodoItemDetailCommand
             this.listId = _data["listId"];
             this.priority = _data["priority"];
             this.note = _data["note"];
+            this.tags = _data["tags"];
         }
     }
 
@@ -886,6 +888,7 @@ export class UpdateTodoItemDetailCommand implements IUpdateTodoItemDetailCommand
         data["listId"] = this.listId;
         data["priority"] = this.priority;
         data["note"] = this.note;
+        data["tags"] = this.tags;
         return data;
     }
 }
@@ -895,6 +898,7 @@ export interface IUpdateTodoItemDetailCommand {
     listId?: number;
     priority?: PriorityLevel;
     note?: string | undefined;
+    tags?: string;
 }
 
 export enum PriorityLevel {
@@ -1061,6 +1065,7 @@ export class TodoItemDto implements ITodoItemDto {
     listId?: number;
     title?: string | undefined;
     done?: boolean;
+    tags?: string;
     priority?: number;
     note?: string | undefined;
 
@@ -1079,6 +1084,7 @@ export class TodoItemDto implements ITodoItemDto {
             this.listId = _data["listId"];
             this.title = _data["title"];
             this.done = _data["done"];
+            this.tags = _data["tags"];
             this.priority = _data["priority"];
             this.note = _data["note"];
         }
@@ -1097,6 +1103,7 @@ export class TodoItemDto implements ITodoItemDto {
         data["listId"] = this.listId;
         data["title"] = this.title;
         data["done"] = this.done;
+        data["tags"] = this.tags;
         data["priority"] = this.priority;
         data["note"] = this.note;
         return data;
@@ -1108,6 +1115,7 @@ export interface ITodoItemDto {
     listId?: number;
     title?: string | undefined;
     done?: boolean;
+    tags?: string;
     priority?: number;
     note?: string | undefined;
 }
