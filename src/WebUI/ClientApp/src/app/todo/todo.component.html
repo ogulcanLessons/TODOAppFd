@@ -32,7 +32,11 @@
     <div class="col-sm-8" *ngIf="selectedList">
       <div class="clearfix">
         <h2 class="float-start">{{ selectedList.title }}</h2>
-        <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" (input)="search()" />
+        <input type="text" style="margin: 5px;" placeholder="Search..." [(ngModel)]="searchTerm" (input)="search()" />
+        <button class="btn btn-primary" style="margin: 5px;" title="Tags" *ngFor="let usedTag of mostUsedTags"
+                (click)="mostUsedTagSelected(usedTag)">
+          {{usedTag}}
+        </button>
         <button id="listOptions" class="btn btn-default float-end" title="List Options..."
                 (click)="showListOptionsModal(listOptionsModalTemplate)">
           <i class="bi bi-three-dots-vertical"></i>

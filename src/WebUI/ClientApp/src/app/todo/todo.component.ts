@@ -37,6 +37,7 @@ export class TodoComponent implements OnInit {
   });
   searchTerm: string = '';
   selectedFilterList: TodoListDto;
+  mostUsedTags: string[] = [];
 
 
   constructor(
@@ -53,21 +54,57 @@ export class TodoComponent implements OnInit {
         this.priorityLevels = result.priorityLevels;
         if (this.lists.length) {
           this.selectedList = this.lists[0];
-          this.selectedFilterList = this.selectedList;
+          this.selectedFilterList = Object.assign({}, this.selectedList);
+          this.getMostUsedTags();
         }
       },
       error => console.error(error)
     );
   }
 
+  mostUsedTagSelected(tag: string) {
+    this.searchTerm = tag;
+    this.search();
+  }
+
+  getMostUsedTags() {
+    const tagCounts = {};
+
+    this.selectedFilterList.items.forEach(item => {
+      const tags = item.tags.split(',');
+      tags.forEach(tag => {
+        if (tag.trim() !== '') {
+          if (tagCounts[tag]) {
+            tagCounts[tag]++;
+          } else {
+            tagCounts[tag] = 1;
+          }
+        }
+      });
+    });
+
+    const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]);
+    if (sortedTags.length >= 3) {
+      this.mostUsedTags = sortedTags.slice(0, 3);
+    }
+    else {
+      this.mostUsedTags = sortedTags.slice(0, sortedTags.length);
+    }
+    console.log(this.mostUsedTags);
+  }
+
   selectList(list: TodoListDto) {
+    this.selectedList.items = this.selectedFilterList.items;
     this.selectedList = list
-    this.selectedFilterList = this.selectedList;
+    this.selectedFilterList = Object.assign({}, this.selectedList);
+    this.getMostUsedTags();
+    this.searchTerm = "";
   }
 
   search() {
-    console.log('term:', this.searchTerm);
-    console.log('list:', this.selectedFilterList.items);
+    if (!this.searchTerm) {
+      this.selectedList.items = this.selectedFilterList.items;
+    }
     this.selectedList.items = this.selectedFilterList.items.filter(t => t.tags.includes(this.searchTerm))
   }
 
@@ -98,7 +135,8 @@ export class TodoComponent implements OnInit {
         list.id = result;
         this.lists.push(list);
         this.selectedList = list;
-        this.selectedFilterList = this.selectedList;
+        this.selectedFilterList = Object.assign({}, this.selectedList);
+        this.getMostUsedTags();
         this.newListModalRef.hide();
         this.newListEditor = {};
       },
@@ -146,7 +184,8 @@ export class TodoComponent implements OnInit {
         this.deleteListModalRef.hide();
         this.lists = this.lists.filter(t => t.id !== this.selectedList.id);
         this.selectedList = this.lists.length ? this.lists[0] : null;
-        this.selectedFilterList = this.selectedList;
+        this.selectedFilterList = Object.assign({}, this.selectedList);
+        this.getMostUsedTags();
       },
       error => console.error(error)
     );
@@ -171,7 +210,7 @@ export class TodoComponent implements OnInit {
           this.selectedList.items = this.selectedList.items.filter(
             i => i.id !== this.selectedItem.id
           );
-          this.selectedFilterList = this.selectedList;
+          this.selectedFilterList = Object.assign({}, this.selectedList);
           const listIndex = this.lists.findIndex(
             l => l.id === item.listId
           );
@@ -182,6 +221,7 @@ export class TodoComponent implements OnInit {
         this.selectedItem.priority = item.priority;
         this.selectedItem.note = item.note;
         this.selectedItem.tags = item.tags;
+        this.getMostUsedTags();
         this.itemDetailsModalRef.hide();
         this.itemDetailsFormGroup.reset();
       },
@@ -199,7 +239,8 @@ export class TodoComponent implements OnInit {
     } as TodoItemDto;
 
     this.selectedList.items.push(item);
-    this.selectedFilterList = this.selectedList;
+    this.selectedFilterList = Object.assign({}, this.selectedList);
+    this.getMostUsedTags();
     const index = this.selectedList.items.length - 1;
     this.editItem(item, 'itemTitle' + index);
   }
@@ -274,7 +315,8 @@ export class TodoComponent implements OnInit {
         error => console.error(error)
       );
     }
-    this.selectedFilterList = this.selectedList;
+    this.selectedFilterList = Object.assign({}, this.selectedList);
+    this.getMostUsedTags();
   }
 
   stopDeleteCountDown() {
