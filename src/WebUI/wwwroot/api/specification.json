@@ -436,6 +436,9 @@
             "type": "string",
             "nullable": true
           },
+          "isDeleted": {
+            "type": "boolean"
+          },
           "done": {
             "type": "boolean"
           }
@@ -557,6 +560,9 @@
             "type": "string",
             "nullable": true
           },
+          "isDeleted": {
+            "type": "boolean"
+          },
           "items": {
             "type": "array",
             "items": {
@@ -591,6 +597,9 @@
           "note": {
             "type": "string",
             "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
           }
         }
       },

@@ -11,5 +11,7 @@ public class TodoItemBriefDto : IMapFrom<TodoItem>
 
     public string? Title { get; set; }
 
+    public bool isDeleted { get; set; }
+
     public bool Done { get; set; }
 }
