@@ -1008,7 +1008,6 @@ export class TodoListDto implements ITodoListDto {
     id?: number;
     title?: string | undefined;
     colour?: string | undefined;
-    isDeleted?: boolean;
     items?: TodoItemDto[];
 
     constructor(data?: ITodoListDto) {
@@ -1025,7 +1024,6 @@ export class TodoListDto implements ITodoListDto {
             this.id = _data["id"];
             this.title = _data["title"];
             this.colour = _data["colour"];
-            this.isDeleted = _data["isDeleted"];
             if (Array.isArray(_data["items"])) {
                 this.items = [] as any;
                 for (let item of _data["items"])
@@ -1046,7 +1044,6 @@ export class TodoListDto implements ITodoListDto {
         data["id"] = this.id;
         data["title"] = this.title;
         data["colour"] = this.colour;
-        data["isDeleted"] = this.isDeleted;
         if (Array.isArray(this.items)) {
             data["items"] = [];
             for (let item of this.items)
@@ -1060,7 +1057,6 @@ export interface ITodoListDto {
     id?: number;
     title?: string | undefined;
     colour?: string | undefined;
-    isDeleted?: boolean;
     items?: TodoItemDto[];
 }
 
@@ -1071,7 +1067,6 @@ export class TodoItemDto implements ITodoItemDto {
     done?: boolean;
     priority?: number;
     note?: string | undefined;
-    isDeleted?: boolean;
 
     constructor(data?: ITodoItemDto) {
         if (data) {
@@ -1090,7 +1085,6 @@ export class TodoItemDto implements ITodoItemDto {
             this.done = _data["done"];
             this.priority = _data["priority"];
             this.note = _data["note"];
-            this.isDeleted = _data["isDeleted"];
         }
     }
 
@@ -1109,7 +1103,6 @@ export class TodoItemDto implements ITodoItemDto {
         data["done"] = this.done;
         data["priority"] = this.priority;
         data["note"] = this.note;
-        data["isDeleted"] = this.isDeleted;
         return data;
     }
 }
@@ -1121,7 +1114,6 @@ export interface ITodoItemDto {
     done?: boolean;
     priority?: number;
     note?: string | undefined;
-    isDeleted?: boolean;
 }
 
 export class CreateTodoListCommand implements ICreateTodoListCommand {

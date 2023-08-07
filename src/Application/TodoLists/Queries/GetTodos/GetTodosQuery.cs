@@ -37,7 +37,6 @@ public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
                     Id = t.Id,
                     Title = t.Title,
                     Colour = t.Colour,
-                    isDeleted = t.IsDeleted,
                     Items = t.Items.Where(item => item.IsDeleted == false)
                                   .Select(item => new TodoItemDto
                                   {
@@ -46,8 +45,7 @@ public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
                                       Title = item.Title,
                                       Done = item.Done,
                                       Priority = (int)item.Priority,
-                                      Note = item.Note,
-                                      isDeleted = item.IsDeleted
+                                      Note = item.Note
                                   })
                                   .ToList()
                 })
