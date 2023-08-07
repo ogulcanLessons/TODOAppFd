@@ -490,6 +490,9 @@
           "note": {
             "type": "string",
             "nullable": true
+          },
+          "tags": {
+            "type": "string"
           }
         }
       },
@@ -583,6 +586,9 @@
           },
           "done": {
             "type": "boolean"
+          },
+          "tags": {
+            "type": "string"
           },
           "priority": {
             "type": "integer",
