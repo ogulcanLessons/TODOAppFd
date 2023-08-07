@@ -721,6 +721,7 @@ export class TodoItemBriefDto implements ITodoItemBriefDto {
     id?: number;
     listId?: number;
     title?: string | undefined;
+    isDeleted?: boolean;
     done?: boolean;
 
     constructor(data?: ITodoItemBriefDto) {
@@ -737,6 +738,7 @@ export class TodoItemBriefDto implements ITodoItemBriefDto {
             this.id = _data["id"];
             this.listId = _data["listId"];
             this.title = _data["title"];
+            this.isDeleted = _data["isDeleted"];
             this.done = _data["done"];
         }
     }
@@ -753,6 +755,7 @@ export class TodoItemBriefDto implements ITodoItemBriefDto {
         data["id"] = this.id;
         data["listId"] = this.listId;
         data["title"] = this.title;
+        data["isDeleted"] = this.isDeleted;
         data["done"] = this.done;
         return data;
     }
@@ -762,6 +765,7 @@ export interface ITodoItemBriefDto {
     id?: number;
     listId?: number;
     title?: string | undefined;
+    isDeleted?: boolean;
     done?: boolean;
 }
 
